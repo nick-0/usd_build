@@ -3,3 +3,4 @@ dist/
 inst/
 pypi/
 USD/
+*.pyc
