@@ -1,7 +1,7 @@
 :: download USD source
 git clone https://github.com/PixarAnimationStudios/USD.git
 :: activate conda
-call conda activate db
+call conda activate usd_py38
 :: use x64 2019
 :: build USD
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat" && python USD\build_scripts\build_usd.py .\inst --build-args USD,-DPXR_INSTALL_LOCATION=../pxr/pluginfo 
