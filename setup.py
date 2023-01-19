@@ -150,7 +150,7 @@ setuptools.setup(
     packages=setuptools.find_packages(os.path.join(BUILD_DIR, 'lib/python')),
     package_dir={"": os.path.join(BUILD_DIR, 'lib/python')},
     package_data={
-        "": ["*.so", "*.dll", "*.pyd","*.pyi",'*.qss','**/*.ttf','**/*.png','**/*.txt','**/*.glslfx','**/*.usda'],
+        "": ["*.so", "*.dll", "*.pyd","*.pyi",'*.qss','**/*.ttf','**/*.png','**/*.txt','**/*.glslfx','**/*.usda','**/*.hdr'],
         "pxr": ["pluginfo/*", "pluginfo/*/*", "pluginfo/*/*/*"],
     },
     data_files=[('scripts',bin_files)],
