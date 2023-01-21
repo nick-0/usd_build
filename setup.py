@@ -53,16 +53,21 @@ def windows():
     return platform.system() == "Windows"
 
 WORKING_ROOT = '.'
+USD_SOURCE_DIR = os.path.join(WORKING_ROOT,'USD')
 USD_BUILD_OUTPUT = os.path.join(WORKING_ROOT, 'inst')
 BUILD_DIR = os.path.join(WORKING_ROOT, 'pypi')
 
 # Copy everything in lib over before we start making changes
 shutil.copytree(os.path.join(USD_BUILD_OUTPUT, 'lib'), os.path.join(BUILD_DIR, 'lib'))
 
-"""Move the 3rd party plugins into the same directory above for easier 
+"""Copy the 3rd party plugins into the same directory above for easier 
 distribution.  Needed for usdview.
 """
 copy_tree(os.path.join(USD_BUILD_OUTPUT,'plugin/usd'), os.path.join(BUILD_DIR,'lib/usd'))
+
+"""Copy the schema templates and usdGenSchema.py files"""
+copy_tree(os.path.join(USD_SOURCE_DIR,'pxr/usd/usd/codegenTemplates'),os.path.join(BUILD_DIR,'lib/python/pxr/codegenTemplates'))
+shutil.copy(os.path.join(USD_SOURCE_DIR,'pxr/usd/usd/usdGenSchema.py'),os.path.join(BUILD_DIR,'lib/python/pxr/usdGenSchema.py'))
 
 # Move the pluginfos into a directory contained inside pxr, for easier
 # distribution. This breaks the relative paths in the pluginfos, but we'll need
@@ -150,8 +155,11 @@ setuptools.setup(
     packages=setuptools.find_packages(os.path.join(BUILD_DIR, 'lib/python')),
     package_dir={"": os.path.join(BUILD_DIR, 'lib/python')},
     package_data={
-        "": ["*.so", "*.dll", "*.pyd","*.pyi",'*.qss','**/*.ttf','**/*.png','**/*.txt','**/*.glslfx','**/*.usda','**/*.hdr'],
-        "pxr": ["pluginfo/*", "pluginfo/*/*", "pluginfo/*/*/*"],
+        "": ["*.so", "*.dll", "*.pyd","*.pyi",'*.qss','**/*.ttf',
+            '**/*.png','**/*.txt','**/*.glslfx','**/*.usda','**/*.hdr',
+            ],
+        "pxr": ["pluginfo/*", "pluginfo/*/*", "pluginfo/*/*/*"], # copy all the pluginfo
+        "pxr": ["codegenTemplates/*"]
     },
     data_files=[('scripts',bin_files)],
     classifiers=[
@@ -165,7 +173,8 @@ setuptools.setup(
     ],
     python_requires='>=3.6, <3.10',
     install_requires=[
-        'PyOpenGL',
-        'PySide6'
+        'PyOpenGL','PyOpenGL_accelerate',
+        'PySide6',
+        'Jinja2', # for building schemas
     ],
 )
