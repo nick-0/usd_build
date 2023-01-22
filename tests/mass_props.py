@@ -2,7 +2,6 @@ from pxr import Usd, UsdGeom, UsdPhysics,Gf,Tf
 import numpy as np
 
 # build geometry
-print(dir(Usd.Stage))
 stage = Usd.Stage.CreateNew('MassProps_01.usda')
 UsdGeom.SetStageUpAxis(stage,'Z')
 UsdGeom.SetStageMetersPerUnit(stage, 1.0)
