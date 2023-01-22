@@ -85,7 +85,7 @@ if windows():
     # because there are no RPATHs to worry about.
     dll_files = glob.glob(os.path.join(BUILD_DIR, "lib/*.dll"))
     dll_files.extend(glob.glob(os.path.join(BUILD_DIR, "bin/*.dll")))
-    dll_files.extend(glob.glob(os.path.join(BUILD_DIR,'lib/python/pxr/pluginfo/*.dll')))
+    # dll_files.extend(glob.glob(os.path.join(BUILD_DIR,'lib/python/pxr/pluginfo/*.dll')))
     for f in dll_files:
         shutil.move(f, os.path.join(BUILD_DIR, "lib/python/pxr"))
 
@@ -158,8 +158,7 @@ setuptools.setup(
         "": ["*.so", "*.dll", "*.pyd","*.pyi",'*.qss','**/*.ttf',
             '**/*.png','**/*.txt','**/*.glslfx','**/*.usda','**/*.hdr',
             ],
-        "pxr": ["pluginfo/*", "pluginfo/*/*", "pluginfo/*/*/*"], # copy all the pluginfo
-        "pxr": ["codegenTemplates/*"]
+        "pxr": ["pluginfo/*", "pluginfo/*/*", "pluginfo/*/*/*","codegenTemplates/*"], # copy all the pluginfo and codegen templates
     },
     data_files=[('scripts',bin_files)],
     classifiers=[
