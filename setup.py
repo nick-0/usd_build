@@ -134,7 +134,22 @@ if args.post_release_tag:
     version = "{}.{}".format(version, args.post_release_tag)
 
 # get the bin files
-bin_files = [os.path.join(BUILD_DIR,'bin',fn) for fn in os.listdir(os.path.join(BUILD_DIR,'bin'))]
+# bin_files = [os.path.join(BUILD_DIR,'bin',fn) for fn in os.listdir(os.path.join(BUILD_DIR,'bin'))]
+
+# this copies built USD for plugin builds
+def generate_data_files(root_dirs = ['bin','cmake','include','lib']):
+    data_files = [('Library',[os.path.join(USD_BUILD_OUTPUT,'pxrConfig.cmake')])]
+    for _dir in root_dirs:
+        for root, dirs, files in os.walk(os.path.join(USD_BUILD_OUTPUT,_dir)):
+            for fn in files:
+                # if fn =='.':
+                    # print(root,fn)
+                relative_dest_path = os.path.relpath(root, USD_BUILD_OUTPUT)
+                relative_src_path = os.path.relpath(root, '.')
+                data_files.append(
+                    (os.path.join("Library",relative_dest_path),[os.path.join(relative_src_path,fn)])
+                    )
+    return data_files
 
 # Config
 setuptools.setup(
@@ -160,7 +175,11 @@ setuptools.setup(
             ],
         "pxr": ["pluginfo/*", "pluginfo/*/*", "pluginfo/*/*/*","codegenTemplates/*"], # copy all the pluginfo and codegen templates
     },
-    data_files=[('scripts',bin_files)],
+    # data_files=[
+    #     ('scripts',bin_files),
+    #     ('Library',[os.path.join(USD_BUILD_OUTPUT,'pxrConfig.cmake')])
+    #     ],
+    data_files=generate_data_files(),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: Other/Proprietary License",
