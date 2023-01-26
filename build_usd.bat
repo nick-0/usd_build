@@ -1,14 +1,16 @@
 :: download USD source
 git clone https://github.com/PixarAnimationStudios/USD.git
 :: activate conda
-call conda activate usd_py38
-:: use x64 2019
+call conda activate usd_py310
+:: install python packages
+call python -m pip install --upgrade pip
+call python -m pip install PySide2
+call python -m pip install PyOpenGL
+:: use x64 2022
+call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
 :: build USD
-call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat" && python USD\build_scripts\build_usd.py .\inst --build-args USD,-DPXR_INSTALL_LOCATION=../pxr/pluginfo 
+call python USD\build_scripts\build_usd.py D:\dev\usd\usd_23.02_py310 -v
 :: build stubs
-call conda develop %~dp0\inst\lib\python
-call SET PATH=%PATH%;%~dp0\inst\bin;%~dp0\inst\lib
+call conda develop D:\dev\usd\usd_23.02_py310\lib\python
+call SET PATH=%PATH%;D:\dev\usd\usd_23.02_py310\bin;D:\dev\usd\usd_23.02_py310\lib
 call python generate_use_stubs.py 
-:: make a pypi directory -> BUILD_DIR
-mkdir pypi
-call python setup.py bdist_wheel
