@@ -14,3 +14,9 @@ call python USD\build_scripts\build_usd.py D:\dev\usd\usd_23.02_py310 -v
 call conda develop D:\dev\usd\usd_23.02_py310\lib\python
 call SET PATH=%PATH%;D:\dev\usd\usd_23.02_py310\bin;D:\dev\usd\usd_23.02_py310\lib
 call python generate_use_stubs.py 
+
+echo . >> "D:\dev\usd\usd_23.02_py310\lib\python\pxr\__init__.py"
+echo import os >> "D:\dev\usd\usd_23.02_py310\lib\python\pxr\__init__.py"
+echo from pathlib import Path >> "D:\dev\usd\usd_23.02_py310\lib\python\pxr\__init__.py"
+echo p = Path(__file__).parents[2] >> "D:\dev\usd\usd_23.02_py310\lib\python\pxr\__init__.py"
+echo os.add_dll_directory(p) >> "D:\dev\usd\usd_23.02_py310\lib\python\pxr\__init__.py"
