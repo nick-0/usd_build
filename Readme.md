@@ -32,10 +32,7 @@ Installation:
 (usd_py38)> git clone https://github.com/nick-0/usd_stubs_windows.git
 (usd_py38)> cd usd_stubs_windows
 (usd_py38)> build_usd.bat
-...
-...
-(usd_py38)>python -m pip install dist/usd_core-22.11-py3-none-any.whl
-(usd_py38)>usdview tests/MassProps_01.usda
+
 ```
 This should clone the USD master branch, build it, create stubs,
  and prepare everything to build a python wheel.
