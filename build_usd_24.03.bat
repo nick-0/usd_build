@@ -1,7 +1,7 @@
 :: download USD source
 git clone https://github.com/PixarAnimationStudios/USD.git
 :: activate conda
-call conda activate usd_py310
+call conda activate spectra
 :: install python packages
 call python -m pip install --upgrade pip
 call python -m pip install PySide2
