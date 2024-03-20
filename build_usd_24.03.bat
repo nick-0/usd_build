@@ -11,7 +11,12 @@ call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliar
 :: build USD
 call python USD\build_scripts\build_usd.py D:\dev\usd\usd_24.03_py310 --draco --openimageio --build-variant release
 
+:: Add dlls to __init__.py
 echo import os >> "D:\dev\usd\usd_24.03_py310\lib\python\pxr\__init__.py"
 echo from pathlib import Path >> "D:\dev\usd\usd_24.03_py310\lib\python\pxr\__init__.py"
 echo p = Path(__file__).parents[2] >> "D:\dev\usd\usd_24.03_py310\lib\python\pxr\__init__.py"
 echo os.add_dll_directory(p) >> "D:\dev\usd\usd_24.03_py310\lib\python\pxr\__init__.py"
+
+:: Remove src & build directories
+rmdir /S /Q "D:\dev\usd\usd_24.03_py310\src"
+rmdir /S /Q "D:\dev\usd\usd_24.03_py310\build"
